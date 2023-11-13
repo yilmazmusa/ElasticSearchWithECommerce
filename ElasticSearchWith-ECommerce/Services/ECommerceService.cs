@@ -52,9 +52,5 @@ namespace ElasticSearchWith_ECommerce.Services
             return (eCommerceListViewModel, totalCount, pageLinkCount);
         }
 
-        public Task<(List<ECommerceViewModel>, long totalCount, long pageLinkCount)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, object , int pageSize)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
