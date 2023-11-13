@@ -5,6 +5,6 @@ namespace ElasticSearchWith_ECommerce
 {
     public interface IECommerceRepository
     {
-        public  Task<(List<ECommerce> list, long count)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, int pageSize);
+        public  Task<(List<ECommerce> eCommerceList, long totalCount)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, int pageSize);
     }
 }
