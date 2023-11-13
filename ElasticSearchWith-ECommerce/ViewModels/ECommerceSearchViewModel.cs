@@ -2,7 +2,7 @@
 
 namespace ElasticSearchWith_ECommerce.ViewModels
 {
-    public class ECommerceSearchViewModel
+    public class ECommerceSearchViewModel // Bu ViewModel UI'dan  gelen request bilgilerini karşılayabilmek için
     {
         
         public string? CustomerFullName { get; set; }
