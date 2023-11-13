@@ -17,6 +17,7 @@ namespace ElasticSearchWith_ECommerce.Repository
         }
 
         public async Task<(List<ECommerce> eCommerceList, long totalCount)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, int pageSize)
+
         { //Yukarda iki değer döndük birinde ECommerce datalarını list şeklinde, diğerini de sayfalama(pagination) için count
 
             //Total Count 100 olsun
