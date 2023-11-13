@@ -22,5 +22,6 @@ namespace ElasticSearchWith_ECommerce.ViewModels
         [DataType(DataType.Date)]
         public DateTime? OrderDateEnd { get; set; }
         
+
     }
 }
