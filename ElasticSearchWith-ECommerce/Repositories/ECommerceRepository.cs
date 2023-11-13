@@ -1,5 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.QueryDsl;
+using ElasticSearchWith_ECommerce.Interfaces;
 using ElasticSearchWith_ECommerce.Models;
 using ElasticSearchWith_ECommerce.ViewModels;
 
@@ -15,7 +16,7 @@ namespace ElasticSearchWith_ECommerce.Repository
             _elasticsearchClient = elasticSearchClient;
         }
 
-        public async Task<(List<ECommerce> list, long count)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, int pageSize)
+        public async Task<(List<ECommerce> eCommerceList, long totalCount)> SearchAsync(ECommerceSearchViewModel searchViewModel, int page, int pageSize)
         { //Yukarda iki değer döndük birinde ECommerce datalarını list şeklinde, diğerini de sayfalama(pagination) için count
 
             //Total Count 100 olsun
