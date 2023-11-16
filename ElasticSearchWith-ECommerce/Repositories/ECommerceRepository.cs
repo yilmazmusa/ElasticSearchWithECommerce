@@ -24,8 +24,21 @@ namespace ElasticSearchWith_ECommerce.Repository
             //page = 1 pageSize = 10 olduğunda 1-10 arasındaki dataları döner
             //page = 2 pageSize = 10 olduğunda 11-20 arasındaki dataları döner
 
-            
+
             List<Action<QueryDescriptor<ECommerce>>> listQuery = new();
+
+
+            if (searchViewModel is null)  //searchViewModel'in boş gelme durumuna göre tüm datayı dönüyoruz
+            {
+                Action<QueryDescriptor<ECommerce>> query = q => q.MatchAll();
+
+                listQuery.Add(query);
+
+                return await CalculateResultPage(page, pageSize, listQuery); //searchViewModel boş ise tüm datayı çek
+                                                                             //sonra o datayı(listQuery) requestte gelen page
+                                                                             //ve pageSize değerlerine göre UI da dön
+                                                                             //alttaki if lere boş yere bakma dedik.
+            }
 
 
 
@@ -71,10 +84,25 @@ namespace ElasticSearchWith_ECommerce.Repository
             {
                 Action<QueryDescriptor<ECommerce>> query = q => q.Term(t => t
                                                                  .Field(f => f.Gender)
-                                                                 .Value(searchViewModel.Gender));
+                                                                 .Value(searchViewModel.Gender).CaseInsensitive());
                 listQuery.Add(query);
             }
 
+            if (!listQuery.Any()) // Yukardaki if lerin hiç birine girmezse listQuery lsitesinin içi boş kalır
+                                  // içine data eklemsi olmaz, boş olursada aşağıda patlar(99.satır)
+            {
+                Action<QueryDescriptor<ECommerce>> query = q => q.MatchAll();
+                listQuery.Add(query);
+            }
+
+            return await CalculateResultPage(page, pageSize, listQuery); //searchViewModel boş değilse yukardaki if lerden birilerine ya da hepsine girer
+                                                                         //sogulamalar sonucunda gelen datalarla(listQuery), requestte gelen page ve pageSize
+                                                                         //değerlerine göre UI da döner.
+
+        }
+
+        private async Task<(List<ECommerce> eCommerceList, long totalCount)> CalculateResultPage(int page, int pageSize, List<Action<QueryDescriptor<ECommerce>>> listQuery)
+        {
             var pageFrom = (page - 1) * pageSize;
 
             var response = await _elasticsearchClient.SearchAsync<ECommerce>(s => s.Index(indexName)
@@ -90,10 +118,6 @@ namespace ElasticSearchWith_ECommerce.Repository
             }
 
             return (response.Documents.ToList(), response.Total);
-
-
         }
-
-
     }
 }
