@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+@model SearchPageViewModel
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4">
+            @* Search kısmının yapılacağı div *@
+
+            <form asp-action="Search" method="Get">
+
+                <div class="mv-3">
+                    <label asp-for="SearchViewModel.CustomerFullName" class="form-label"></label>
+                    <input asp-for="SearchViewModel.CustomerFullName" class=" form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SearchViewModel.Gender" class="form-label"></label>
+                    <input asp-for="SearchViewModel.Gender" class="form-control" />
+
+                   @*  @{
+                        List<SelectListItem> listItems = new List<SelectListItem>();
+                        listItems.Add(new SelectListItem
+            {
+                Text = "AtlantaPort",
+                Value = "AtlantaPort"
+            });
+                        listItems.Add(new SelectListItem
+            {
+                Text = "NewJersyTerminal",
+                Value = "NewJersyTerminal",
+                Selected = true
+            });
+                        listItems.Add(new SelectListItem
+            {
+                Text = "AWS",
+                Value = "AWS"
+            });
+                    } *@
+
+                    @* @Html.DropDownListFor(model => model.SearchViewModel.Gender, new SelectList(Model.SearchViewModel.Gender, "Value", "Text"), "Select an option") *@
+
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SearchViewModel.Category" class="form-label"></label>
+                    <input asp-for="SearchViewModel.Category" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SearchViewModel.OrderDateStart" class="form-label"></label>
+                    <input asp-for="SearchViewModel.OrderDateStart" class="form-control" />
+                </div>
+
+                <div class=" mb-3">
+                    <label asp-for="SearchViewModel.OrderDateEnd" class="form-label"></label>
+                    <input asp-for="SearchViewModel.OrderDateEnd" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="col-md-8">
+            @* Search sonucunda gelen dataların basılacağı  div *@
+
+            <div class="alert alert-success">
+
+                <span> Toplam @Model.TotalCount kayıt bulunmuştur. </span>
+            </div>
+
+
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        @* th kalın yazmak için*@
+                        @* <th>Id</th>
+                        <th>OrderId</th> *@
+                        <th>Customer Full Name</th>
+                        <th>Gender</th>
+                        <th>Category</th>
+                        <th>TaxfulTotalPrice</th>
+                        <th>OrderDate</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var item in Model.ECommerceViewModelList)
+                    {
+                        <tr>
+                            @*  <td>@item.Id</td>
+                        <td>@item.OrderId</td> *@
+                            <td>@item.CustomerFullName</td>
+                            <td>@item.Gender</td>
+                            <td>@item.Category</td>
+                            <td>@item.Taxful_Total_Price</td>
+                            <td>@item.OrderDate</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+

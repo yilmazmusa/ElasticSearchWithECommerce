@@ -1,3 +1,9 @@
+using ElasticSearchWith_ECommerce.Extensions;
+using ElasticSearchWith_ECommerce.Interfaces;
+using ElasticSearchWith_ECommerce.Models;
+using ElasticSearchWith_ECommerce.Repository;
+using ElasticSearchWith_ECommerce.Services;
+
 namespace ElasticSearchWith_ECommerce
 {
     public class Program
@@ -8,6 +14,11 @@ namespace ElasticSearchWith_ECommerce
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddElastic(builder.Configuration);
+            builder.Services.AddScoped<IECommerceService, ECommerceService>();
+            builder.Services.AddScoped<IECommerceRepository, ECommerceRepository>();
+
 
             var app = builder.Build();
 

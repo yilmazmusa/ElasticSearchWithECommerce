@@ -4,12 +4,11 @@ namespace ElasticSearchWith_ECommerce.ViewModels
 {
     public class ECommerceSearchViewModel // Bu ViewModel UI'dan  gelen request bilgilerini karşılayabilmek için
     {
-        
+        [Display(Name = "Customer Full Name")]
         public string? CustomerFullName { get; set; }
 
         [Display(Name = "Category")]
         public  string? Category { get; set; }
-
 
         [Display(Name = "Cinsiyet")]
         public string? Gender { get; set; }
