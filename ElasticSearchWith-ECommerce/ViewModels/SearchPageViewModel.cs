@@ -10,8 +10,18 @@
         public ECommerceSearchViewModel SearchViewModel { get; set; }
 
 
+        public int StartPage()
+        {
+            return (Page - 5) <= 0 ? 1 : (Page - 5);
+        }
+        
+        public long EndPage()
+        {
+            return (Page + 5) >= PageLinkCount ? PageLinkCount : (Page + 5);
+        }
 
-        public string CreateUrl(HttpRequest request, int page, int pageSize)  // Dinamik Url oluşturan metod
+
+        public string CreatePageUrl(HttpRequest request, long page, int pageSize)  // Dinamik Url oluşturan metod
         {
             //https://www/search?querystringdegeri
 
@@ -24,7 +34,7 @@
                 //Page in yerine requestte gelen page i koy dedik yani URL i sürekli güncelliyoruz
                 //Client'ın isteğine göre çünkü adam bmw ye bakarken mercedes e bakmak isteyebilir.
 
-                currentUrl = currentUrl.Replace($"PageSize={PageSize}", $"{pageSize}", StringComparison.OrdinalIgnoreCase);
+                currentUrl = currentUrl.Replace($"PageSize={PageSize}", $"Page={pageSize}", StringComparison.OrdinalIgnoreCase);
                 //Aynı şekilde PageSize'ı da Clientten gelen isteğe göre sürekli güncelliyoruz.
             }
 
@@ -32,7 +42,7 @@
             {
                 currentUrl = $"{currentUrl}?Page={page}";
 
-                currentUrl = $"{currentUrl}?PageSize={pageSize}";
+                currentUrl = $"{currentUrl}&PageSize={pageSize}";
             }
 
             return currentUrl;
