@@ -6,42 +6,21 @@
 
     <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             @* Search kısmının yapılacağı div *@
 
             <form asp-action="Search" method="Get">
+                @*asp-action="Search" ile bu formdaki button'a tıklanıldığında ilgili Controller'ın hangi metoduna gidileceğini belirtiyoruz'  *@
 
                 <div class="mv-3">
                     <label asp-for="SearchViewModel.CustomerFullName" class="form-label"></label>
                     <input asp-for="SearchViewModel.CustomerFullName" class=" form-control" />
+                    @*asp-for="SearchViewModel.CustomerFullName" ile girilen input değerinin backend de hangi fielda atanacağını belirtiyoruz. *@
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="SearchViewModel.Gender" class="form-label"></label>
                     <input asp-for="SearchViewModel.Gender" class="form-control" />
-
-                   @*  @{
-                        List<SelectListItem> listItems = new List<SelectListItem>();
-                        listItems.Add(new SelectListItem
-            {
-                Text = "AtlantaPort",
-                Value = "AtlantaPort"
-            });
-                        listItems.Add(new SelectListItem
-            {
-                Text = "NewJersyTerminal",
-                Value = "NewJersyTerminal",
-                Selected = true
-            });
-                        listItems.Add(new SelectListItem
-            {
-                Text = "AWS",
-                Value = "AWS"
-            });
-                    } *@
-
-                    @* @Html.DropDownListFor(model => model.SearchViewModel.Gender, new SelectList(Model.SearchViewModel.Gender, "Value", "Text"), "Select an option") *@
-
 
                 </div>
 
@@ -68,7 +47,7 @@
 
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-9">
             @* Search sonucunda gelen dataların basılacağı  div *@
 
             <div class="alert alert-success">
@@ -94,6 +73,7 @@
 
 
                 <tbody>
+                    @*  tbody'nin içindeki değerlerin yukardaki thead ın içindeki değerlerle sıralı bir şekilde uyuşması gerekiyor *@
 
                     @foreach (var item in Model.ECommerceViewModelList)
                     {
@@ -112,6 +92,30 @@
 
 
             </table>
+
+            <nav>
+
+
+                <ul class="pagination">
+
+
+                    <li class="page-item" )>
+                        <a class="page-link" href="@Model.CreatePageUrl(Context.Request, 1, Model.PageSize)">First</a>
+                    </li>
+
+                    @for (int i = Model.StartPage(); i <= @Model.EndPage(); i++)
+                    {
+                        <li class="page-item" @(Model.Page == i ? "active" : "")>
+                            <a class="page-link" href="@Model.CreatePageUrl(Context.Request, i, Model.PageSize)">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item")>
+                        <a class="page-link" href="@Model.CreatePageUrl(Context.Request, Model.PageLinkCount, Model.PageSize)">Last</a>
+                    </li>
+
+                </ul>
+            </nav>
 
 
         </div>
